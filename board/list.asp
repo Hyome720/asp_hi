@@ -60,7 +60,7 @@ rs.Open sql, db, 1
             &nbsp;
             &nbsp;
             &nbsp;
-            <a href="write.html">
+            <a href="write.asp">
                 <img src="https://img.freepik.com/free-vector/illustration-of-document-icon_53876-37007.jpg?w=1380&t=st=1677052922~exp=1677053522~hmac=5f8645b7a869e81c30d37d18ee7ea86d6ac8fbed6e250759cf90abe5ae812e86" width="40px">
                 글 작성하기
             </a>

@@ -39,10 +39,14 @@
         }
     </script>
     <div style="align-items:left">
-        <table cellpadding="0" cellspacing="0" style="border:0; width: 700;">
-            <tr>
-                <td>
-                    <form name="myform" method="post" action="./write_ok.asp">
+        <form name="myform" method="post" action="./write_ok.asp">
+            <input type="hidden" name="board_idx" value="<%=request("board_idx")%>">
+            <input type="hidden" name="ref" value="<%=request("ref")%>">
+            <input type="hidden" name="re_step" value="<%=request("re_step")%>">
+            <input type="hidden" name="re_level" value="<%=request("re_level")%>">
+            <table cellpadding="0" cellspacing="0" style="border:0; width: 700;">
+                <tr>
+                    <td>
                         <div style="text-align: center;">
                             <table cellpadding="0" cellspacing="0" style="border: 1px dashed rgb(192, 192, 192); width: 540;">
                                 <tr>
@@ -53,7 +57,7 @@
                                     </td>
                                     <td class="write-td-left">
                                         <strong class="write-text-strong">
-                                            글 올리기
+                                            질문/답변하기
                                         </strong>
                                     </td>
                                 </tr>
@@ -128,10 +132,10 @@
                                 <input type="reset" value="재작성하기" name="reset">
                             </p>
                         </div>
-                    </form>
-                </td>
-            </tr>
-        </table>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 </body>
 </html>

@@ -44,8 +44,30 @@ else
     number = rs(0) + 1
 end if
 
-sql = "insert into " & session("table") & " (name, email, homepage, title, board_content, num,"
-sql = sql & "readnum, writeday, pwd) values "
+' 답변하기 일 경우
+if request("idx") <> "" then
+
+    ref = Cint(request("ref"))
+    re_step = Cint(request("re_step"))
+    re_level = Cint(request("re_level"))
+
+    sqlString = "UPDATE Board_Re SET re_step = re_step + 1"
+    sqlString = sqlString & " WJERE ref = " & ref & " AND re_step > " & re_step
+    db.execute(sqlString)
+
+    re_step = re_step + 1
+    re_level = re_level + 1
+
+else
+
+    ref = number
+    re_step = 0
+    re_level = 0
+
+end if
+
+sql = "insert into Board_Re (name, email, homepage, title, board_content, num,"
+sql = sql & "readnum, writeday, ref, re_step, re_level, pwd) values "
 sql = sql & "('" & name & "'"
 sql = sql & ",'" & email & "'"
 sql = sql & ",'" & homepage & "'"
@@ -53,6 +75,9 @@ sql = sql & ",'" & title & "'"
 sql = sql & ",'" & board_content & "'"
 sql = sql & "," & number
 sql = sql & ",0,'" & date() & "'"
+sql = sql & "," & ref
+sql = sql & "," & re_step
+sql = sql & "," & re_level
 sql = sql & ",'" & pwd & "')"
 
 ' db에 insert 쿼리를 보내 데이터 추가
