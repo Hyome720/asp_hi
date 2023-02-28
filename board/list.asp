@@ -18,7 +18,7 @@ Set db = Server.CreateObject("ADODB.Connection")
 ' DB 열기
 db.Open("DSN=localsqldb;UID=sa;PWD=1234;")
 ' 모든 데이터 가져오기
-sql = "SELECT * from " & session("table") & " ORDER BY num DESC"
+sql = "SELECT * from Board_Re ORDER BY ref DESC, re_step ASC"
 ' 레코드셋 개체의 인스턴스 생성
 Set rs = Server.CreateObject("ADODB.Recordset")
 ' 페이지 사이즈 지정. 레코드셋 오픈 전에 지정
@@ -78,17 +78,14 @@ rs.Open sql, db, 1
         <div style="text-align: center;">
             <table class="list-table">
                 <tr>
-                    <td class="list-td-01">
-                        번호
+                    <td class="list-td-04">
+                        제목
                     </td>
                     <td class="list-td-02">
                         글쓴이
                     </td>
                     <td class="list-td-02">
                         날짜
-                    </td>
-                    <td class="list-td-04">
-                        제목
                     </td>
                     <td class="list-td-01">
                         조회수
@@ -97,19 +94,17 @@ rs.Open sql, db, 1
                 <% i = 1
                 Do Until rs.EOF or i > rs.pageSize %>
                 <tr>
-                    <td class="list-td-01" style="color: black !important; background-color: #fff !important;">
-                        <%=rs("num")%></td>
+                    <td class="list-td-04" style="color: black !important; background-color: #fff !important;">
+                        <a href="content.asp?idx=<%=rs("board_idx")%>">
+                            <%=rs("title")%>
+                        </a>
+                    </td>
                     <td class="list-td-02" style="color: black !important; background-color: #fff !important;">
                         <a href="mailto:<%=rs("email")%>">
                             <%=rs("name")%>
                         </a>
                     </td>
                     <td class="list-td-02" style="color: black !important; background-color: #fff !important;"><%=rs("writeday")%></td>
-                    <td class="list-td-04" style="color: black !important; background-color: #fff !important;">
-                        <a href="content.asp?idx=<%=rs("board_idx")%>">
-                            <%=rs("title")%>
-                        </a>
-                    </td>
                     <td class="list-td-01" style="color: black !important; background-color: #fff !important;"><%=rs("readnum")%></td>
                 </tr>
                 <%
