@@ -1,3 +1,21 @@
+<%
+if request("board_idx") <> "" then
+    Set db = Server.CreateObject("ADODB.Connection")
+    db.Open("DSN=localsqldb;UID=sa;PWD=1234;")
+
+    sql = "SELECT title, board_content FROM Board_Re"
+    sql = sql & " WHERE board_idx = " & request("board_idx")
+
+    Set grs = Server.CreateObject("ADODB.Recordset")
+
+    grs.Open sql, db
+
+    title = grs("title")
+    board_content = grs("board_content")
+    board_content = ">" & board_content
+    board_content = replace(board_content, chr(13) & chr(10), chr(13) & chr(10) & ">")
+end if
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -110,7 +128,7 @@
                                         </strong>
                                     </td>
                                     <td class="write-td-right">
-                                        <textarea wrap="hard" rows="10" name="board_content" cols="55" style="border: 1 dashed;"></textarea>
+                                        <textarea wrap="hard" rows="10" name="board_content" cols="55" style="border: 1 dashed;"><%=board_content%></textarea>
                                     </td>
                                 </tr>
                                 <tr>
