@@ -9,7 +9,7 @@ Set db = Server.CreateObject("ADODB.Connection")
 db.Open("DSN=localsqldb;UID=sa;PWD=1234;")
 
 Set rs = Server.CreateObject("ADODB.Recordset")
-sql = "SELECT * FROM " & session("table") & " WHERE board_idx=" & request("idx")
+sql = "SELECT * FROM Board_Re WHERE board_idx=" & request("idx")
 
 rs.Open sql, db
 %>
