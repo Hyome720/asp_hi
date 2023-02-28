@@ -11,6 +11,7 @@ if request("board_idx") <> "" then
     grs.Open sql, db
 
     title = grs("title")
+    title = replace(title, chr(34), "&#34")
     board_content = grs("board_content")
     board_content = ">" & board_content
     board_content = replace(board_content, chr(13) & chr(10), chr(13) & chr(10) & ">")
@@ -118,7 +119,7 @@ end if
                                         </strong>
                                     </td>
                                     <td class="write-td-right">
-                                        <input type="text" name="title" size="20" style="border: 1 dashed;">
+                                        <input type="text" name="title" size="20" style="border: 1 dashed;" value="<%=title%>">
                                     </td>
                                 </tr>
                                 <tr>
