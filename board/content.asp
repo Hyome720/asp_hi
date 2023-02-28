@@ -3,15 +3,26 @@ response.codepage = 949
 response.charset = "EUC-KR"
 %>
 
-<%=Request.QueryString("idx")%>
 <%
 Set db = Server.CreateObject("ADODB.Connection")
 db.Open("DSN=localsqldb;UID=sa;PWD=1234;")
 
+updateSql = "UPDATE Board_Re SET readnum = readnum + 1"
+updateSql = updateSql & " WHERE board_idx = " & request("idx")
+
+db.execute(updateSql)
+
 Set rs = Server.CreateObject("ADODB.Recordset")
 sql = "SELECT * FROM Board_Re WHERE board_idx=" & request("idx")
 
-rs.Open sql, db
+rs.Open sql, db, 1, 1
+
+board_idx = rs("board_idx")
+ref = rs("ref")
+re_level = rs("re_level")
+re_step = rs("re_step")
+board_content = replace(rs("board_content"), chr(13) & chr(10), "<br>")
+
 %>
 
 <!DOCTYPE html>
@@ -22,6 +33,11 @@ rs.Open sql, db
     <link rel="stylesheet" href="./css/content.css">
 </head>
 <body>
+    <script>
+        function sendRe() {
+            document.re.submit()
+        }
+    </script>
     <div style="margin: auto;">
         <h2><%=rs("title")%> 내용</h2>
         <div>
@@ -78,24 +94,35 @@ rs.Open sql, db
                 </table>
             </div>
         </div>
+        <a href="javascript:sendRe()">
+            <p>
+                &lt;답변하기&gt;
+            </p>
+        </a>
         <a href="list.asp">
             <p>
-                리스트로 돌아가기
+                &lt;리스트로 돌아가기&gt;
             </p>
         </a>
         <a href="edit.asp?idx=<%=rs("board_idx")%>">
             <p>
-                수정
+                &lt;수정&gt;
             </p>
         </a>
         <a href="del.asp?idx=<%=rs("board_idx")%>">
             <p>
-                삭제
+                &lt;삭제&gt;
             </p>
         </a>
         <% if session("id") = "admin" then%>
         <p>현재글의 비밀번호 : <%=rs("pwd")%></p>
         <% end if %>
     </div>
+    <form name="re" method="post" action="./write.asp">
+        <input type="hidden" name="board_idx" value="<%=board_idx%>">
+        <input type="hidden" name="ref" value="<%=ref%>">
+        <input type="hidden" name="re_step" value="<%=re_step%>">
+        <input type="hidden" name="re_level" value="<%=re_level%>">
+    </form>
 </body>
 </html>

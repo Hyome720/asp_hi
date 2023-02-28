@@ -45,14 +45,14 @@ else
 end if
 
 ' 답변하기 일 경우
-if request("idx") <> "" then
+if request("board_idx") <> "" then
 
     ref = Cint(request("ref"))
     re_step = Cint(request("re_step"))
     re_level = Cint(request("re_level"))
 
     sqlString = "UPDATE Board_Re SET re_step = re_step + 1"
-    sqlString = sqlString & " WJERE ref = " & ref & " AND re_step > " & re_step
+    sqlString = sqlString & " WHERE ref = " & ref & " AND re_step > " & re_step
     db.execute(sqlString)
 
     re_step = re_step + 1

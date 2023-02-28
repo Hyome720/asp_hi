@@ -22,7 +22,7 @@ sql = "SELECT * from Board_Re ORDER BY ref DESC, re_step ASC"
 ' 레코드셋 개체의 인스턴스 생성
 Set rs = Server.CreateObject("ADODB.Recordset")
 ' 페이지 사이즈 지정. 레코드셋 오픈 전에 지정
-rs.pageSize = 3
+rs.pageSize = 5
 ' 지정 쿼리로 DB연결하고 레코드셋에 저장
 rs.Open sql, db, 1
 %>
@@ -94,7 +94,14 @@ rs.Open sql, db, 1
                 <% i = 1
                 Do Until rs.EOF or i > rs.pageSize %>
                 <tr>
-                    <td class="list-td-04" style="color: black !important; background-color: #fff !important;">
+                    <td class="list-td-04" style="color: black !important; background-color: #fff !important; text-align: left">
+                        <% 
+                        if rs("re_level") > 0 then
+                        wid = 5 * rs("re_level") & px
+                        %>
+                        <img src="../img/white.png" width="<%=wid%>" height="14px">
+                        <img src="../img/answer.png">
+                        <% end if %>
                         <a href="content.asp?idx=<%=rs("board_idx")%>">
                             <%=rs("title")%>
                         </a>
